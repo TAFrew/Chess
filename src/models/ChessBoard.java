@@ -21,50 +21,62 @@ public class ChessBoard {
 		for(Square s : _squares){
 			// fill in pawns
 			if(s.getRow() == 1){
-				s.setPiece(new Pawn(true, Color.WHITE));
+				Pawn p = new Pawn(s, Color.WHITE);
+				s.setPiece(p);
 			}
 			if(s.getRow() == 6){
-				s.setPiece(new Pawn(true, Color.BLACK));
+				Pawn p = new Pawn(s, Color.BLACK);
+				s.setPiece(p);
 			}
-			
+
 			// fill in castles
 			if((s.getRow() == 0) && (s.getColumn() == 0 || s.getColumn() == 7)){
-				s.setPiece(new Castle(true, Color.WHITE));
+				Castle c = new Castle(s, Color.WHITE);
+				s.setPiece(c);
 			}
 			if((s.getRow() == 7) && (s.getColumn() == 0 || s.getColumn() == 7)){
-				s.setPiece(new Castle(true, Color.BLACK));
+				Castle c = new Castle(s, Color.BLACK);
+				s.setPiece(c);
 			}
-			
+
 			// fill in knights
 			if((s.getRow() == 0) && (s.getColumn() == 1 || s.getColumn() == 6)){
-				s.setPiece(new Knight(true, Color.WHITE));
+				Knight k = new Knight(s, Color.WHITE);
+				s.setPiece(k);
 			}
 			if((s.getRow() == 7) && (s.getColumn() == 1 || s.getColumn() == 6)){
-				s.setPiece(new Knight(true, Color.BLACK));
+				Knight k = new Knight(s, Color.BLACK);
+				s.setPiece(k);
 			}
-			
+
 			// fill in bishops
 			if((s.getRow() == 0) && (s.getColumn() == 2 || s.getColumn() == 5)){
-				s.setPiece(new Bishop(true, Color.WHITE));
+				Bishop b = new Bishop(s, Color.WHITE);
+				s.setPiece(b);
 			}
 			if((s.getRow() == 7) && (s.getColumn() == 2 || s.getColumn() == 5)){
-				s.setPiece(new Bishop(true, Color.BLACK));
+				Bishop b = new Bishop(s, Color.BLACK);
+				s.setPiece(b);
 			}
-			
+
 			// fill in queens
 			if((s.getRow() == 0) && (s.getColumn() == 3)){
-				s.setPiece(new Queen(true, Color.WHITE));
+				Queen q = new Queen(s, Color.WHITE);
+				s.setPiece(q);
 			}
 			if((s.getRow() == 7) && (s.getColumn() == 3)){
-				s.setPiece(new Queen(true, Color.BLACK));
+				Queen q = new Queen(s, Color.BLACK);
+				s.setPiece(q);
 			}
-			
+
 			// fill in kings
 			if((s.getRow() == 0) && (s.getColumn() == 4)){
-				s.setPiece(new King(true, Color.WHITE));
+				King k = new King(s, Color.WHITE);
+				s.setPiece(k);
 			}
 			if((s.getRow() == 7) && (s.getColumn() == 4)){
-				s.setPiece(new King(true, Color.BLACK));
+				King k = new King(s, Color.BLACK);
+				s.setPiece(k);
 			}
 		}
 
