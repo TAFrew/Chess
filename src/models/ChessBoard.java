@@ -45,15 +45,27 @@ public class ChessBoard {
 			
 			// fill in bishops
 			if((s.getRow() == 0) && (s.getColumn() == 2 || s.getColumn() == 5)){
-				s.setPiece(new Bishop(true), Color.WHITE);
+				s.setPiece(new Bishop(true, Color.WHITE));
+			}
+			if((s.getRow() == 7) && (s.getColumn() == 2 || s.getColumn() == 5)){
+				s.setPiece(new Bishop(true, Color.BLACK));
 			}
 			
 			// fill in queens
-			if((s.getRow() == 0 || s.getRow() == 7) && (s.getColumn() == 2 || s.getColumn() == 5)){
-				s.setPiece(new Castle(true));
+			if((s.getRow() == 0) && (s.getColumn() == 3)){
+				s.setPiece(new Queen(true, Color.WHITE));
+			}
+			if((s.getRow() == 7) && (s.getColumn() == 3)){
+				s.setPiece(new Queen(true, Color.BLACK));
 			}
 			
 			// fill in kings
+			if((s.getRow() == 0) && (s.getColumn() == 4)){
+				s.setPiece(new King(true, Color.WHITE));
+			}
+			if((s.getRow() == 7) && (s.getColumn() == 4)){
+				s.setPiece(new King(true, Color.BLACK));
+			}
 		}
 
 	}
