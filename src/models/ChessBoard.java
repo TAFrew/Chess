@@ -79,6 +79,78 @@ public class ChessBoard {
 				s.setPiece(k);
 			}
 		}
+	}
 
+	public ArrayList<Square> getBoard(){
+		return _squares;
+	}
+
+	public boolean isClearPathBetween(Square square1, Square square2) {
+		int smallerColumn = square1.getColumn();
+		int largerColumn = square2.getColumn();
+		if(smallerColumn > largerColumn){
+			smallerColumn = square2.getColumn();
+			largerColumn = square1.getColumn();
+		}
+		int smallerRow = square1.getRow();
+		int largerRow = square2.getRow();
+		if(smallerRow > largerRow){
+			smallerRow = square2.getRow();
+			largerRow = square1.getRow();
+		}
+
+		// if in same row
+		if(square1.getRow() == square2.getRow()){
+			for(int i = smallerColumn; i <= largerColumn; i++){
+				if(!(getSquare(square1.getRow(),i).getPiece() == null)){
+					return false;
+				}
+			}
+			return true;
+		}
+		
+		// if in same column
+		if(square1.getColumn() == square2.getColumn()){
+			for(int i = smallerRow; i <= largerRow; i++){
+				if(!(getSquare(square1.getRow(),i).getPiece() == null)){
+					return false;
+				}
+			}
+			return true;
+		}
+		
+		// if in diagonal
+		if(Math.abs(square1.getRow() - square2.getRow()) == Math.abs(square1.getColumn() - square2.getColumn())){
+			// need some way of deciding which square to start with (probably lower row) but then whether to have for loop
+			// going up or down for column
+			if((smallerRow == square1.getRow() && smallerColumn == square1.getColumn())||(smallerRow == square2.getRow() && smallerColumn == square2.getColumn())){
+				for(int i = 1; i < largerRow - smallerRow; i++){
+					if(!(getSquare(smallerRow + i,smallerColumn + i).getPiece() == null)){
+						return false;
+					}
+				}
+				return true;
+			}
+			else{
+				for(int i = 1; i < largerRow - smallerRow; i++){
+					if(!(getSquare(smallerRow + i,smallerColumn - i).getPiece() == null)){
+						return false;
+					}
+				}
+				return true;
+			}
+		}
+		
+		// else false
+		return false;
+	}
+
+	private Square getSquare(int row, int col) {
+		for(Square s : _squares){
+			if(s.getRow() == row && s.getColumn() == col){
+				return s;
+			}
+		}
+		return null;
 	}
 }

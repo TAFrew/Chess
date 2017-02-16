@@ -26,4 +26,8 @@ public class Square {
 	public void setPiece(ChessPiece piece){
 		_piece = piece;
 	}
+
+	public ChessPiece getPiece() {
+		return _piece;
+	}
 }

@@ -6,16 +6,16 @@ import javafx.scene.paint.Color;
 
 public abstract class ChessPiece {
 	
-	private Square _square;
-	private ArrayList<Square> _possibleMoves;
-	private Color _color;
+	protected Square _square;
+	protected ArrayList<Square> _possibleMoves;
+	protected Color _color;
 	
 	public ChessPiece(Square square, Color color) {
 		_square = square;
 		_color = color;
 	}
 	
-	public abstract ArrayList<Square> getPossibleSquares();
+	public abstract ArrayList<Square> getPossibleSquares(ChessBoard board);
 	
 	// chess piece needs to have squares it can move to from current one
 }
