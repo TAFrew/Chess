@@ -21,10 +21,10 @@ public class Pawn extends ChessPiece{
 		ArrayList<Square> possibleSquares = new ArrayList<>();
 		int direction = 0;
 		if(_color.equals(Color.WHITE)){
-			direction = -1;
+			direction = 1;
 		}
 		else if(_color.equals(Color.BLACK)){
-			direction = 1;
+			direction = -1;
 		}
 
 		// check if hasnt moved. have moved boolen or some shit in pawn class.
