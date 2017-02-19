@@ -103,7 +103,10 @@ public class ChessBoardGUI {
 
 		for(int y = 8; y >= 0; y--){
 			for(int x = 0; x < 8; x++){
-				_squares.add(createEntity(x*90 + 10, y*90 - 90, 80, 80, Color.WHITE));
+				Rectangle r = (Rectangle)createEntity(x*90 + 10, y*90 - 90, 80, 80, Color.WHITE);
+				r.setStroke(Color.WHITE);
+				r.setStrokeWidth(5.0);
+				_squares.add(r);
 			}
 		}
 

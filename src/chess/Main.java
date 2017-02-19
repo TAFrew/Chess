@@ -9,6 +9,7 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import models.ChessBoard;
 import models.ChessPiece;
@@ -22,7 +23,7 @@ public class Main extends Application{
 	private Stage _stage;
 	private AnimationTimer _timer;
 
-	private int _turn = 1;
+	private Color _currentPlayer = Color.WHITE;
 	private ChessPiece _selectedPiece;
 	ArrayList<Square> _possibleSquares = new ArrayList<>();
 	boolean _showPossibleMoves = false;
@@ -96,59 +97,40 @@ public class Main extends Application{
 
 		Square s = _board.getBoard().get(finalCount);
 
+		// if no piece is selected, select it and show possible moves
 		if(_selectedPiece == null){
 			if(!(s.getPiece() == null)){
-				_selectedPiece = s.getPiece();
-				_possibleSquares = s.getPiece().getPossibleSquares(_board);
+				if(s.getPiece().getColor().equals(_currentPlayer)){
+					_selectedPiece = s.getPiece();
+					_possibleSquares = s.getPiece().getPossibleSquares(_board);
+				}
 			}
 		}
 		else{
+			// if square is in possible moves, go there
 			if(_possibleSquares.contains(s)){
 				_board.movePiece(_selectedPiece, s);
 				_selectedPiece = null;
 				_possibleSquares = new ArrayList<>();
+				swapPlayer();
 			}
+			// select new piece
 			else if(!(s.getPiece() == null)){
-				_selectedPiece = s.getPiece();
-				_possibleSquares = s.getPiece().getPossibleSquares(_board);
+				if(s.getPiece().getColor().equals(_currentPlayer)){
+					_selectedPiece = s.getPiece();
+					_possibleSquares = s.getPiece().getPossibleSquares(_board);
+				}
 			}
 		}
-		
-		// TODO this whole thing is fucked
-		/*if(s.getPiece() == null){
-			// if in possible moves
-			if(_possibleSquares.contains(s)){
-				_board.movePiece(_selectedPiece,s);
-				_GUI.update();
-			}
-		}
-		
-		// else : if square contians piece of players: show possible moves on GUI	
-		else if(_selectedPiece == null){
-			if(!(s.getPiece() == null)){
-				_possibleSquares = s.getPiece().getPossibleSquares(_board);
-				_showPossibleMoves = true;
-				_selectedPiece = s.getPiece();
-			}
-		}
-		// if select same piece, unshow possible moves
-		else if(s.getPiece().equals(_selectedPiece)){
-			_possibleSquares = new ArrayList<>();
-			//_showPossibleMoves = false;
-			_selectedPiece = null;
-			_GUI.update();
-		}
-		else{
-			// if click on another piece, show moves
-			if(!(s.getPiece() == null)){
-				_possibleSquares = s.getPiece().getPossibleSquares(_board);
-				_selectedPiece = s.getPiece();
-			}
-		}*/
+	}
 
-		// if() piece is already selected, check if they have clicked in list of possible squares, if so do the move, 
-		// update the board model, and then update the GUI
-
+	private void swapPlayer() {
+		if(_currentPlayer.equals(Color.WHITE)){
+			_currentPlayer = Color.BLACK;
+		}
+		else if(_currentPlayer.equals(Color.BLACK)){
+			_currentPlayer = Color.WHITE;
+		}
 	}
 
 	/**
