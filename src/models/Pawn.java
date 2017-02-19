@@ -6,11 +6,8 @@ import javafx.scene.paint.Color;
 
 public class Pawn extends ChessPiece{
 
-	private boolean _hasMoved;
-
 	public Pawn(Square square, Color color) {
 		super(square, color);
-		_hasMoved = false;
 	}
 
 	@Override
@@ -37,7 +34,7 @@ public class Pawn extends ChessPiece{
 			}
 			if(!(_hasMoved)){
 				if(s.getColumn() == _square.getColumn() && s.getRow() == _square.getRow() + (2 * direction)){
-					if(s.getPiece() == null){
+					if(s.getPiece() == null && board.isClearPathBetween(s, _square)){
 						possibleSquares.add(s);
 					}
 				}
@@ -55,5 +52,4 @@ public class Pawn extends ChessPiece{
 
 		return possibleSquares;
 	}
-
 }

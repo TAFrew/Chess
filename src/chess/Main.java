@@ -48,7 +48,7 @@ public class Main extends Application{
 			@Override
 			public void handle(Event event) {
 				handleMouseClick(event);
-				_GUI.update();
+				_GUI.update(_possibleSquares);
 			}
 		});
 
@@ -62,10 +62,7 @@ public class Main extends Application{
 		_timer = new AnimationTimer() {
 			@Override
 			public void handle(long now) {
-				// TODO
-				if(_showPossibleMoves){
-					_GUI.showPossibleMoves(_possibleSquares);
-				}
+				//TODO if AI
 			}
 		};
 
@@ -96,20 +93,62 @@ public class Main extends Application{
 				count++;
 			}
 		}
-		
+
 		Square s = _board.getBoard().get(finalCount);
+
+		if(_selectedPiece == null){
+			if(!(s.getPiece() == null)){
+				_selectedPiece = s.getPiece();
+				_possibleSquares = s.getPiece().getPossibleSquares(_board);
+			}
+		}
+		else{
+			if(_possibleSquares.contains(s)){
+				_board.movePiece(_selectedPiece, s);
+				_selectedPiece = null;
+				_possibleSquares = new ArrayList<>();
+			}
+			else if(!(s.getPiece() == null)){
+				_selectedPiece = s.getPiece();
+				_possibleSquares = s.getPiece().getPossibleSquares(_board);
+			}
+		}
+		
+		// TODO this whole thing is fucked
+		/*if(s.getPiece() == null){
+			// if in possible moves
+			if(_possibleSquares.contains(s)){
+				_board.movePiece(_selectedPiece,s);
+				_GUI.update();
+			}
+		}
 		
 		// else : if square contians piece of players: show possible moves on GUI	
-		if(_selectedPiece == null){
+		else if(_selectedPiece == null){
 			if(!(s.getPiece() == null)){
 				_possibleSquares = s.getPiece().getPossibleSquares(_board);
 				_showPossibleMoves = true;
+				_selectedPiece = s.getPiece();
 			}
 		}
+		// if select same piece, unshow possible moves
+		else if(s.getPiece().equals(_selectedPiece)){
+			_possibleSquares = new ArrayList<>();
+			//_showPossibleMoves = false;
+			_selectedPiece = null;
+			_GUI.update();
+		}
+		else{
+			// if click on another piece, show moves
+			if(!(s.getPiece() == null)){
+				_possibleSquares = s.getPiece().getPossibleSquares(_board);
+				_selectedPiece = s.getPiece();
+			}
+		}*/
 
 		// if() piece is already selected, check if they have clicked in list of possible squares, if so do the move, 
 		// update the board model, and then update the GUI
-		
+
 	}
 
 	/**

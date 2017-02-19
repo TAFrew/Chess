@@ -101,24 +101,24 @@ public class ChessBoard {
 
 		// if in same row
 		if(square1.getRow() == square2.getRow()){
-			for(int i = smallerColumn; i <= largerColumn; i++){
+			for(int i = smallerColumn + 1; i < largerColumn; i++){
 				if(!(getSquare(square1.getRow(),i).getPiece() == null)){
 					return false;
 				}
 			}
 			return true;
 		}
-		
+
 		// if in same column
 		if(square1.getColumn() == square2.getColumn()){
-			for(int i = smallerRow; i <= largerRow; i++){
-				if(!(getSquare(square1.getRow(),i).getPiece() == null)){
+			for(int i = smallerRow + 1; i < largerRow; i++){
+				if(!(getSquare(i,square1.getColumn()).getPiece() == null)){
 					return false;
 				}
 			}
 			return true;
 		}
-		
+
 		// if in diagonal
 		if(Math.abs(square1.getRow() - square2.getRow()) == Math.abs(square1.getColumn() - square2.getColumn())){
 			// need some way of deciding which square to start with (probably lower row) but then whether to have for loop
@@ -133,14 +133,17 @@ public class ChessBoard {
 			}
 			else{
 				for(int i = 1; i < largerRow - smallerRow; i++){
-					if(!(getSquare(smallerRow + i,smallerColumn - i).getPiece() == null)){
-						return false;
+					if(!(getSquare(smallerRow + i,largerColumn - i) == null)){
+						if(!(getSquare(smallerRow + i,largerColumn - i).getPiece() == null)){
+							return false;
+						}	
 					}
+					else return false;
 				}
 				return true;
 			}
 		}
-		
+
 		// else false
 		return false;
 	}
@@ -152,5 +155,14 @@ public class ChessBoard {
 			}
 		}
 		return null;
+	}
+
+	public void movePiece(ChessPiece selectedPiece, Square newSquare) {
+		Square currentSquare = selectedPiece._square;
+		currentSquare.setPiece(null);
+		newSquare.setPiece(selectedPiece);
+		selectedPiece._square = newSquare;
+		
+		selectedPiece.move();
 	}
 }

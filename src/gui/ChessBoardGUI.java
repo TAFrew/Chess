@@ -32,40 +32,52 @@ public class ChessBoardGUI {
 		initialize(board);
 	}
 
-	public void update(){
+	public void update(ArrayList<Square> possibleSquares){
 		for(int i = 0; i < _board.getBoard().size(); i++){
 			Square s = _board.getBoard().get(i);
 			if(!(s.getPiece() == null)){
 				Rectangle r = (Rectangle)_squares.get(i);
+				String colour = "";
+				String piece = "";
+				if(s.getPiece().getColor().equals(Color.WHITE)){
+					colour = "White";
+				}
+				else{
+					colour = "Black";
+				}
 				if(s.getPiece() instanceof Pawn){
-					Image image = new Image("file:src/Images/Pawn.png");
-					r.setFill(new ImagePattern(image));
+					piece = "Pawn";
 				}
 				else if(s.getPiece() instanceof Castle){
-					Image image = new Image("file:src/Images/Castle.png");
-					r.setFill(new ImagePattern(image));
+					piece = "Castle";
 				}
 				else if(s.getPiece() instanceof Knight){
-					Image image = new Image("file:src/Images/Knight.png");
-					r.setFill(new ImagePattern(image));
+					piece = "Knight";
 				}
 				else if(s.getPiece() instanceof Bishop){
-					Image image = new Image("file:src/Images/Bishop.png");
-					r.setFill(new ImagePattern(image));
+					piece = "Bishop";
 				}
 				else if(s.getPiece() instanceof Queen){
-					Image image = new Image("file:src/Images/Queen.png");
-					r.setFill(new ImagePattern(image));
+					piece = "Queen";
 				}
 				else if(s.getPiece() instanceof King){
-					Image image = new Image("file:src/Images/King.png");
-					r.setFill(new ImagePattern(image));
+					piece = "King";
 				}
+				Image image = new Image("file:src/Images/" + colour + piece + ".png");
+				r.setFill(new ImagePattern(image));
+			}
+			else{
+				Rectangle r = (Rectangle)_squares.get(i);
+				r.setFill(Color.WHITE);
 			}
 		}
-	}
-
-	public void showPossibleMoves(ArrayList<Square> possibleSquares){
+		
+		for(Node n : _squares){
+			Rectangle r = (Rectangle)n;
+			if(r.getFill().equals(Color.LIGHTCORAL)){
+				r.setFill(Color.WHITE);
+			}
+		}
 		for(Square s : possibleSquares){
 			int row = s.getRow();
 			int col = s.getColumn();
@@ -74,7 +86,7 @@ public class ChessBoardGUI {
 			r.setFill(Color.LIGHTCORAL);
 		}
 	}
-	
+
 	private void initialize(ChessBoard board){
 		_board = board;
 
@@ -87,10 +99,10 @@ public class ChessBoardGUI {
 				_squares.add(createEntity(x*90 + 10, y*90 - 90, 80, 80, Color.WHITE));
 			}
 		}
-
+		
 		_app.getChildren().add(_gamePane);
 		
-		update();
+		update(new ArrayList<>());
 	}
 
 	private Node createEntity(int x, int y, int w, int h, Color colour) {

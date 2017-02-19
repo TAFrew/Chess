@@ -20,6 +20,10 @@ public class Bishop extends ChessPiece {
 		
 		for(Square s : board.getBoard()){
 			// check if in diagonal
+			if(s.getRow() == 2 && s.getColumn() == 0){
+				System.out.println("Test");
+			}
+			
 			if(Math.abs(s.getRow() - _square.getRow()) == Math.abs(s.getColumn() - _square.getColumn())){
 				if(board.isClearPathBetween(s, _square)){
 					if(s.getPiece() == null){
