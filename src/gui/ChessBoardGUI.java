@@ -71,19 +71,26 @@ public class ChessBoardGUI {
 				r.setFill(Color.WHITE);
 			}
 		}
-		
+
 		for(Node n : _squares){
 			Rectangle r = (Rectangle)n;
-			if(r.getFill().equals(Color.LIGHTCORAL)){
-				r.setFill(Color.WHITE);
+			if(!(r.getStroke() == null)){
+				if(r.getStroke().equals(Color.BLUE)){
+					r.setStroke(Color.WHITE);
+				}
 			}
 		}
+		/*if(r.getFill().equals(Color.LIGHTCORAL)){
+				r.setFill(Color.WHITE);
+			}*/
 		for(Square s : possibleSquares){
 			int row = s.getRow();
 			int col = s.getColumn();
 			Rectangle r = (Rectangle)_squares.get((s.getRow() * 8) + s.getColumn());
 			// perhaps here create blue piece thing to go in rect and then when unselected, go back to normal
-			r.setFill(Color.LIGHTCORAL);
+			//r.setFill(Color.LIGHTCORAL);
+			r.setStroke(Color.BLUE);
+			r.setStrokeWidth(5.0);
 		}
 	}
 
@@ -99,9 +106,9 @@ public class ChessBoardGUI {
 				_squares.add(createEntity(x*90 + 10, y*90 - 90, 80, 80, Color.WHITE));
 			}
 		}
-		
+
 		_app.getChildren().add(_gamePane);
-		
+
 		update(new ArrayList<>());
 	}
 
