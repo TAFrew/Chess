@@ -8,6 +8,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 import models.Bishop;
 import models.Castle;
 import models.ChessBoard;
@@ -21,6 +22,7 @@ public class ChessBoardGUI {
 	private ChessBoard _board;
 	private Pane _app = new Pane();
 	private Pane _gamePane = new Pane();
+	private Text _t;
 
 	private ArrayList<Node> _squares = new ArrayList<>();
 
@@ -90,6 +92,10 @@ public class ChessBoardGUI {
 	private void initialize(ChessBoard board){
 		_board = board;
 
+		_t = new Text(350, 350, "Check!");
+		_t.setScaleX(8.0);
+		_t.setScaleY(5.0);
+		_t.setFill(Color.INDIANRED);
 
 		Rectangle rect = new Rectangle(800,800, Color.GREY);
 		_gamePane.getChildren().add(rect);
@@ -116,6 +122,14 @@ public class ChessBoardGUI {
 
 		_gamePane.getChildren().add(entity);
 		return entity;
+	}
+
+	public void check() {
+		_gamePane.getChildren().add(_t);
+	}
+	
+	public void uncheck(){
+		_gamePane.getChildren().remove(_t);
 	}
 
 }

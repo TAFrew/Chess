@@ -142,9 +142,15 @@ public class Main extends Application{
 		}
 	}
 
+	/**
+	 * This method checks whether a player is in check and informs them of this
+	 */
 	private void handleCheck() {
 		if(_board.isInCheck(_currentPlayer)){
-			System.out.println("Check");
+			_GUI.check();
+		}
+		else{
+			_GUI.uncheck();
 		}
 	}
 

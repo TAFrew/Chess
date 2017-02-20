@@ -196,12 +196,26 @@ public class ChessBoard {
 
 	public boolean isInCheckMate(Color player){
 		if(isInCheck(player)){
-			//TODO
-			// if cant move, 
+			// TODO this does not move pieces back afterwards
+			// if cant move,
 			// and cant block 
 			// and cant take piece:
+			// return true
+			for(Square square : _squares){
+				if(!(square.getPiece() == null)){
+					if(square.getPiece().getColor().equals(player)){
+						for(Square s : square.getPiece().getPossibleSquares(this)){
+							movePiece(square.getPiece(), s);
+							if((isInCheck(player))){
+								return false;
+							}
+							movePiece(square.getPiece(), square);
+						}
+					}
+				}
+			}
 			return true;
 		}
-		return false;
+		else return false;
 	}
 }
