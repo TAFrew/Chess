@@ -1,5 +1,6 @@
 package models;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import javafx.scene.paint.Color;
@@ -38,6 +39,21 @@ public class King extends ChessPiece {
 				}
 			}
 		}
+		
+		ArrayList<Square> opponentsMoves = new ArrayList<>();
+		// remove any squares that would put you in check
+		for(Square s : board.getBoard()){
+			if(!(s.getPiece() == null)){
+				if(!(s.getPiece().getColor().equals(_color))){
+					if(!(s.getPiece() instanceof King)){
+						opponentsMoves.addAll(s.getPiece().getPossibleSquares(board));
+					}
+				}
+			}
+		}
+		
+		possibleSquares.removeAll(opponentsMoves);
+		
 		return possibleSquares;
 	}
 }

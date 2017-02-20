@@ -2,13 +2,22 @@ package models;
 
 import java.util.ArrayList;
 
+import gui.PieceSelectionGUI;
+import javafx.event.Event;
+import javafx.event.EventHandler;
+import javafx.scene.Scene;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 
 public class ChessBoard {
 	// has array of squares. squares each CAN contain a piece
 	// square has coordinates too -> 0,0 through to 7,7
 
 	private ArrayList<Square> _squares;
+	private ChessPiece _transformedPiece;
+	private ChessPiece _pieceToTransform;
 
 	public ChessBoard(){
 		_squares = new ArrayList<>();
@@ -164,6 +173,54 @@ public class ChessBoard {
 		selectedPiece._square = newSquare;
 
 		selectedPiece.move();
+		
+		if(selectedPiece instanceof Pawn){
+			if(newSquare.getRow() == 0 || newSquare.getRow() == 7){
+				// player can transform pawn
+				_pieceToTransform = selectedPiece;
+				selectNewPiece(selectedPiece);
+				ChessPiece cp = _transformedPiece;
+				newSquare.setPiece(cp);
+			}
+		}
+	}
+
+	private void selectNewPiece(ChessPiece selectedPiece) {
+		// initialize GUI
+		PieceSelectionGUI gui = new PieceSelectionGUI();
+		Stage newStage = new Stage();
+		Scene scene = new Scene(gui.getPane());
+		scene.setOnMouseClicked(new EventHandler<Event>() {
+
+			@Override
+			public void handle(Event event) {
+				// get coordinates of mouse click event
+				handleClick(event);
+				newStage.close();
+			}
+		});
+		newStage.setTitle("Choose a piece");
+		newStage.setScene(scene);
+		newStage.showAndWait();
+	}
+
+	protected void handleClick(Event event) {
+		MouseEvent me = (MouseEvent) event;
+		double horizontal = me.getSceneX();
+		double vertical = me.getSceneY();
+		
+		if(horizontal > 40 && horizontal < 140 && vertical > 100 & vertical < 200){
+			_transformedPiece = new Queen(_pieceToTransform.getCurrentLocation(), _pieceToTransform.getColor());
+		}
+		else if(horizontal > 180 && horizontal < 280 && vertical > 100 & vertical < 200){
+			_transformedPiece = new Castle(_pieceToTransform.getCurrentLocation(), _pieceToTransform.getColor());
+		}
+		else if(horizontal > 320 && horizontal < 420 && vertical > 100 & vertical < 200){
+			_transformedPiece = new Bishop(_pieceToTransform.getCurrentLocation(), _pieceToTransform.getColor());
+		}
+		else if(horizontal > 460 && horizontal < 560 && vertical > 100 & vertical < 200){
+			_transformedPiece = new Knight(_pieceToTransform.getCurrentLocation(), _pieceToTransform.getColor());
+		}
 	}
 
 	public boolean isInCheck(Color player){

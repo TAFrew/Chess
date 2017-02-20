@@ -97,7 +97,7 @@ public class ChessBoardGUI {
 		_t.setScaleY(5.0);
 		_t.setFill(Color.INDIANRED);
 
-		Rectangle rect = new Rectangle(800,800, Color.GREY);
+		Rectangle rect = new Rectangle(850,800, Color.GREY);
 		_gamePane.getChildren().add(rect);
 
 		for(int y = 8; y >= 0; y--){
