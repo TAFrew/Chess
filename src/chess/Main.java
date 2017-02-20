@@ -113,9 +113,12 @@ public class Main extends Application{
 				if(_board.isInCheck(_currentPlayer)){
 					// do move, then check if still in check, if so undo move and tell them they are in check still?
 					Square currentSquare = _selectedPiece.getCurrentLocation();
+					ChessPiece piece = s.getPiece();
 					_board.movePiece(_selectedPiece, s);
+					
 					if(_board.isInCheck(_currentPlayer)){
 						_board.movePiece(_selectedPiece, currentSquare);
+						_board.movePiece(piece, s);
 					}
 					else{
 						_selectedPiece = null;
