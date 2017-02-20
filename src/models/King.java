@@ -12,7 +12,6 @@ public class King extends ChessPiece {
 
 	@Override
 	public ArrayList<Square> getPossibleSquares(ChessBoard board) {
-		// TODO Auto-generated method stub
 		ArrayList<Square> possibleSquares = new ArrayList<>();
 
 		// for all squares around it: if valid square
@@ -41,5 +40,4 @@ public class King extends ChessPiece {
 		}
 		return possibleSquares;
 	}
-
 }

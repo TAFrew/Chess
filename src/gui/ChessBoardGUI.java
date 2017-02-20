@@ -80,15 +80,8 @@ public class ChessBoardGUI {
 				}
 			}
 		}
-		/*if(r.getFill().equals(Color.LIGHTCORAL)){
-				r.setFill(Color.WHITE);
-			}*/
 		for(Square s : possibleSquares){
-			int row = s.getRow();
-			int col = s.getColumn();
 			Rectangle r = (Rectangle)_squares.get((s.getRow() * 8) + s.getColumn());
-			// perhaps here create blue piece thing to go in rect and then when unselected, go back to normal
-			//r.setFill(Color.LIGHTCORAL);
 			r.setStroke(Color.BLUE);
 			r.setStrokeWidth(5.0);
 		}

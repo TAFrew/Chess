@@ -26,6 +26,10 @@ public abstract class ChessPiece {
 	public Color getColor(){
 		return _color;
 	}
+
+	public Square getCurrentLocation() {
+		return _square;
+	}
 	
 	// chess piece needs to have squares it can move to from current one
 }

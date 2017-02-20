@@ -71,11 +71,11 @@ public class Main extends Application{
 	}
 
 	/**
-	 * This method handles a players turn. It gets the square that they have clicked on, and if they can go here it does so.
+	 * This method handles a players turn. It gets the square/piece that they have clicked on, and shows their possible moves or
+	 * makes the move
 	 * @param event
 	 */
 	protected void handleMouseClick(Event event) {
-		//TODO
 		// get coordinates of mouse click event
 		MouseEvent me = (MouseEvent) event;
 		double horizontal = me.getSceneX();
@@ -109,10 +109,28 @@ public class Main extends Application{
 		else{
 			// if square is in possible moves, go there
 			if(_possibleSquares.contains(s)){
-				_board.movePiece(_selectedPiece, s);
-				_selectedPiece = null;
-				_possibleSquares = new ArrayList<>();
-				swapPlayer();
+				// if in check, only allow moves to take king out of check
+				if(_board.isInCheck(_currentPlayer)){
+					// do move, then check if still in check, if so undo move and tell them they are in check still?
+					Square currentSquare = _selectedPiece.getCurrentLocation();
+					_board.movePiece(_selectedPiece, s);
+					if(_board.isInCheck(_currentPlayer)){
+						_board.movePiece(_selectedPiece, currentSquare);
+					}
+					else{
+						_selectedPiece = null;
+						_possibleSquares = new ArrayList<>();
+						swapPlayer();
+						handleCheck();
+					}
+				}
+				else{
+					_board.movePiece(_selectedPiece, s);
+					_selectedPiece = null;
+					_possibleSquares = new ArrayList<>();
+					swapPlayer();
+					handleCheck();
+				}
 			}
 			// select new piece
 			else if(!(s.getPiece() == null)){
@@ -124,6 +142,15 @@ public class Main extends Application{
 		}
 	}
 
+	private void handleCheck() {
+		if(_board.isInCheck(_currentPlayer)){
+			System.out.println("Check");
+		}
+	}
+
+	/**
+	 * This method swaps the color of the current player
+	 */
 	private void swapPlayer() {
 		if(_currentPlayer.equals(Color.WHITE)){
 			_currentPlayer = Color.BLACK;

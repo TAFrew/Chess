@@ -162,7 +162,46 @@ public class ChessBoard {
 		currentSquare.setPiece(null);
 		newSquare.setPiece(selectedPiece);
 		selectedPiece._square = newSquare;
-		
+
 		selectedPiece.move();
+	}
+
+	public boolean isInCheck(Color player){
+		King king = null;
+
+		// get the king piece
+		for(Square s : _squares){
+			if(!(s.getPiece() == null)){
+				if(s.getPiece() instanceof King){
+					if(s.getPiece().getColor().equals(player)){
+						king = (King)s.getPiece();
+					}
+				}
+			}
+		}
+
+		// for all pieces of the other colour
+		for(Square s : _squares){
+			if(!(s.getPiece() == null)){
+				if(!(s.getPiece().getColor().equals(player))){
+					// if their possible moves contains the square the king is in return true
+					if(s.getPiece().getPossibleSquares(this).contains(king._square)){
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+
+	public boolean isInCheckMate(Color player){
+		if(isInCheck(player)){
+			//TODO
+			// if cant move, 
+			// and cant block 
+			// and cant take piece:
+			return true;
+		}
+		return false;
 	}
 }
